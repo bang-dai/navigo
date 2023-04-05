@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+    php:
+        #container_name: php-navigo
+        build: php8-sf6
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./api:/home/dev/api
+
+    maildev:
+        image: djfarrelly/maildev
+        ports:
+            - "1080:80"
+
+    mysql:
+        image:  mariadb/server:10.3
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+          - /var/data/mariadb:/var/lib/mysql:rw        
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_USER=dev
+          - MYSQL_PASSWORD=dev
+    myadmin:
+        image: phpmyadmin/phpmyadmin:4.7
+        environment:
+            - PMA_HOST=mysql
+        depends_on:
+            - mysql
+        ports:
+            - 9008:80
