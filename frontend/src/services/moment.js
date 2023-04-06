@@ -1,6 +1,5 @@
 const months = ["Jan", "Fev", "Mars", "Avril", "Mai", "Juin", "Jul", "Aout", "Sept", "Oct", "Nov", "Dec"];
 
-
 const getPosition = (step = 0) => {
     const d = new Date()
     const month = d.getMonth()
