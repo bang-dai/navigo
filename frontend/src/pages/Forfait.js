@@ -11,10 +11,12 @@ const Forfait = () => {
     const radioMonth = useRef(null)
     const radioNextMonth = useRef(null)
     const inputForfait = useRef(null)
+    const firstCall = useRef(true)
     const startMonth = momentService.getMonth()
     const startNextMonth = momentService.getMonth(1)
 
     useEffect(() => {
+
         const getData = async () => {
             const data = await getForfaits()
             if (data === undefined) {
@@ -22,9 +24,13 @@ const Forfait = () => {
             }
             setForfaits(data)
         }
-
-        getData()
-    }, [])
+        if (firstCall.current) {
+            getData()
+        }
+        return () => {
+            firstCall.current = false
+        }
+    }, [getForfaits])
 
     const getLabel = (forfait) => {
         const priceMonth = forfait.priceByMonth.toFixed(2) + '€'
