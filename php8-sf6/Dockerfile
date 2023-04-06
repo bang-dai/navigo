@@ -28,7 +28,7 @@ RUN npm install --global yarn
 RUN adduser --system --uid 1000 --no-create-home dev --group && ln -s /var/www /home/dev && chown -R dev:dev /home/dev/
 
 RUN git config --global user.email "bang.dai2@gmail.com" \
-    &&  git config --global user.name "bang-dai"
+    &&  git config --global user.name "bang-dai" \
     &&  git config --global --add safe.directory /var/www/api
 
 

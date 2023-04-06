@@ -26,11 +26,11 @@ Run the docker-compose to build your local environment
 Copy .env.dist to .env and modify the .env file like this example to adapt your uses:
 
 ```yaml
-  DATABASE_URL="mysql://root:root@mysql:3306/php8-sf6?serverVersion=mariadb-10.3.29&charset=utf8mb4"
+  DATABASE_URL="mysql://root:root@mysql:3306/navigo?serverVersion=mariadb-10.3.29&charset=utf8mb4"
 ```
 
-1. Log into the PHP container `docker-composer exec php bash`
-2. Install dependencies : `composer install`
+1. Log into the PHP container `docker-compose exec php bash`
+2. Install dependencies : `cd api && composer install`
 3. Create database: `php bin/console d:d:c`
 4. Play migrations : `php bin/console make:migration` then `php bin/console d:m:m`
 5. Play fixtures : `php bin/console d:f:l --no-interaction`

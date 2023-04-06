@@ -4,13 +4,21 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\AttributeOverride;
+use Doctrine\ORM\Mapping\AttributeOverrides;
+use Doctrine\ORM\Mapping\Column;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[AttributeOverrides(
+    [
+        new AttributeOverride(
+            name: "mobile",
+            column: new Column(name: "mobile", type: "string", length: 30, nullable: true)
+        )
+    ]
+)]
 class User extends Payer
 {
-    #[ORM\Column(length: 30, nullable: true)]
-    protected ?string $mobile = null;
-
     #[ORM\Column]
     protected ?bool $optin = null;
 
@@ -27,11 +35,6 @@ class User extends Payer
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Forfait $forfait = null;
-
-    public function getMobile(): ?string
-    {
-        return $this->mobile;
-    }
 
     public function setMobile(?string $mobile): self
     {
