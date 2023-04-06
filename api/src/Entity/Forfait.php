@@ -22,6 +22,14 @@ class Forfait
     #[ORM\Column]
     private ?float $priceByYear = null;
 
+
+    public function __construct(string $name, float $priceByMonth, float $priceByYear)
+    {
+        $this->name = $name;
+        $this->priceByMonth = $priceByMonth;
+        $this->priceByYear = $priceByYear;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,7 +67,6 @@ class Forfait
     public function setPriceByYear(float $priceByYear): self
     {
         $this->priceByYear = $priceByYear;
-        //teest
 
         return $this;
     }
