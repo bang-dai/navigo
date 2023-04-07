@@ -35,9 +35,21 @@ export const UserProvider = ({ children }) => {
             })
         }
     }
+    /**
+     * Set Month number and Id forfait selected by user
+     * @param {number} startFrom Month from 0 to 11
+     * @param {number} idForfait Id of the forfait
+     */
+    const setForfait = (startFrom, idForfait) => {
+        setUser({
+            ...user,
+            startFrom,
+            idForfait
+        })
+    }
 
     return (
-        <UserContext.Provider value={{ getForfaits }}>
+        <UserContext.Provider value={{ getForfaits, setForfait }}>
             {children}
         </UserContext.Provider>
     );

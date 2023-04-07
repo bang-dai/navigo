@@ -3,10 +3,11 @@ import { useUserProvider } from "@/context/UserContext";
 import Layout from "./Layout";
 import { FormControl, FormLabel, FormHelperText, Select, RadioGroup, Radio, HStack, Button } from "@chakra-ui/react";
 import { momentService } from "@/services/moment";
+import { useNavigate } from "react-router-dom";
 
 
 const Forfait = () => {
-    const { getForfaits } = useUserProvider()
+    const { getForfaits, setForfait } = useUserProvider()
     const [forfaits, setForfaits] = useState()
     const radioMonth = useRef(null)
     const radioNextMonth = useRef(null)
@@ -14,6 +15,7 @@ const Forfait = () => {
     const firstCall = useRef(true)
     const startMonth = momentService.getMonth()
     const startNextMonth = momentService.getMonth(1)
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -40,8 +42,10 @@ const Forfait = () => {
     }
 
     const handleClick = () => {
-        console.log(radioMonth.current.checked ? radioMonth.current.value : radioNextMonth.current.value)
-        console.log(inputForfait.current.value)
+        const month = radioMonth.current.checked ? radioMonth.current.value : radioNextMonth.current.value
+        const idForfait = inputForfait.current.value
+        setForfait(month, idForfait)
+        navigate("/coordonnees")
     }
 
     return (
@@ -69,6 +73,12 @@ const Forfait = () => {
                         <FormHelperText>Chaque mensualité est prélevée en début de mois (au plus tôt le 5) pendant 11 mois. Les frais de dossier (7,60€ TTC) sont prélevés avec la première échéance.</FormHelperText>
                     </FormControl>
                     <Button colorScheme='blue' onClick={handleClick}>Continuer</Button>
+
+                    <p>
+                        (1)
+                        Le tarif mentionné est le tarif actuel. Il est donné à titre indicatif.
+                        Comme mentionné dans les Conditions Générales de Vente et d'Utilisation, toute modification tarifaire décidée par Île-de-France Mobilités est répercutée sur les prélèvements suivant la date d’entrée en vigueur de ladite décision.
+                    </p>
                 </>
             )}
         </Layout>
