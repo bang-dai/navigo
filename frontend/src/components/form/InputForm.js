@@ -1,16 +1,16 @@
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-const InputForm = ({ label, refInput }) => {
+const InputForm = ({ label, refInput, required = true }) => {
     const [isError, setIsError] = useState(false)
 
     function handleFocusOut(e) {
         const value = e.target.value
-        setIsError(value.length === 0)
+        setIsError(required && value.length === 0)
     }
 
     return (
-        <FormControl isInvalid={isError} isRequired mb="1rem">
+        <FormControl isInvalid={isError} isRequired={required} mb="1rem">
             <FormLabel>{label}</FormLabel>
             <Input type='text' onBlur={(e) => handleFocusOut(e)} ref={refInput} />
             {isError && (

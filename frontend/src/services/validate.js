@@ -32,6 +32,11 @@ const isEmail = (email) => {
     return regex.test(email);
 };
 
+const isZipcode = (zipcode) => {
+    const regex = /^(?:0[1-9]|[1-8]\d|9[0-8])\d{3}$/
+    return regex.test(zipcode)
+}
+
 export const validateService = {
-    isText, isDate, isPhone, isEmail
+    isText, isDate, isPhone, isEmail, isZipcode
 }
