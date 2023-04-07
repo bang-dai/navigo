@@ -1,13 +1,16 @@
+import { useRef } from "react";
 import { Button, Card, CardBody, CardHeader, Checkbox, Heading, Text } from "@chakra-ui/react";
+import { useUserProvider } from "@/context/UserContext";
 import Layout from "./Layout";
 import EmailForm from "@/components/form/EmailForm";
-import { useRef } from "react";
-import InputForm from "../components/form/InputForm";
-import PhoneForm from "../components/form/PhoneForm";
-import DateForm from "../components/form/DateForm";
-import CivilityForm from "../components/form/CivilityForm";
+import InputForm from "@/components/form/InputForm";
+import PhoneForm from "@/components/form/PhoneForm";
+import DateForm from "@/components/form/DateForm";
+import CivilityForm from "@/components/form/CivilityForm";
+
 
 const UserInfo = () => {
+    const { updateUserInfos } = useUserProvider()
     const inputMan = useRef()
     const inputWoman = useRef()
     const inputName = useRef()
@@ -16,15 +19,20 @@ const UserInfo = () => {
     const inputMobile = useRef()
     const inputPhone = useRef()
     const inputEmail = useRef()
+    const inputOptin = useRef()
 
     const handleClick = () => {
-        console.log(inputEmail.current.value)
-        console.log(inputName.current.value)
-        console.log(inputFirstName.current.value)
-        console.log(inputBirthday.current.value)
-
         const civility = inputMan.current.checked ? inputMan.current.value : inputWoman.current.value
-        console.log(civility)
+
+        updateUserInfos(
+            civility,
+            inputName.current.value,
+            inputFirstName.current.value,
+            inputBirthday.current.value,
+            inputMobile.current.value,
+            inputPhone.current.value,
+            inputEmail.current.value,
+            inputOptin.current.checked)
     }
 
     return (
@@ -42,7 +50,7 @@ const UserInfo = () => {
                     <PhoneForm label='Telephone portable' refInput={inputMobile} />
                     <PhoneForm label='Telephone fixe' refInput={inputPhone} />
                     <EmailForm refInput={inputEmail} />
-                    <Checkbox>J’accepte de recevoir par e-mail et/ou SMS des offres et informations commerciales de la part des entreprises de transports en commun d’Île-de-France membres du GIE Comutitres, de leurs partenaires, et d’Île-de-France Mobilités.</Checkbox>
+                    <Checkbox ref={inputOptin}>J’accepte de recevoir par e-mail et/ou SMS des offres et informations commerciales de la part des entreprises de transports en commun d’Île-de-France membres du GIE Comutitres, de leurs partenaires, et d’Île-de-France Mobilités.</Checkbox>
                 </CardBody>
             </Card>
 

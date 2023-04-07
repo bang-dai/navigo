@@ -1,6 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import Axios from "@/services/axios";
 import React, { useContext, useState } from 'react';
+import { validateService } from '@/services/validate';
 
 const UserContext = React.createContext(null)
 
@@ -48,8 +49,43 @@ export const UserProvider = ({ children }) => {
         })
     }
 
+    const updateUserInfos = (civility, name, firstName, birthday, mobile, phone, email, optin) => {
+        if (validateService.isText(name)
+            && validateService.isText(firstName)
+            && validateService.isDate(birthday)
+            && validateService.isPhone(mobile)
+            && validateService.isPhone(phone)
+            && validateService.isEmail(email)) {
+
+            setUser({
+                ...user,
+                civility,
+                name,
+                firstName,
+                birthday,
+                mobile,
+                phone,
+                email,
+                optin
+            })
+
+            toast({
+                description: 'ok',
+                status: 'success',
+                isClosable: true,
+            })
+
+        } else {
+            toast({
+                description: 'Le formulaire contient des erreurs!',
+                status: 'error',
+                isClosable: true,
+            })
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ getForfaits, setForfait }}>
+        <UserContext.Provider value={{ getForfaits, setForfait, updateUserInfos }}>
             {children}
         </UserContext.Provider>
     );

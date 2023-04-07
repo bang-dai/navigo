@@ -1,16 +1,12 @@
 import { FormControl, FormErrorMessage, FormLabel, Input, FormHelperText } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { validateService } from '@/services/validate';
 
 const EmailForm = ({ refInput }) => {
     const [isError, setIsError] = useState(false)
 
-    const isValidEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
-
     const handleFocusOut = (e) => {
-        setIsError(!isValidEmail(e.target.value))
+        setIsError(!validateService.isEmail(e.target.value))
     }
 
     return (

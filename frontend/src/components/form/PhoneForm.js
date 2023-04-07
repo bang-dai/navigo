@@ -1,19 +1,12 @@
 import { FormControl, FormErrorMessage, FormLabel, Input, FormHelperText } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { validateService } from '@/services/validate';
 
 const PhoneForm = ({ label, refInput, required = false }) => {
     const [isError, setIsError] = useState(false)
 
-    const isValidPhone = (phone) => {
-        if (!required && phone.length === 0) {
-            return true
-        }
-        const regex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/
-        return regex.test(phone);
-    };
-
     const handleFocusOut = (e) => {
-        setIsError(!isValidPhone(e.target.value))
+        setIsError(!validateService.isPhone(e.target.value))
     }
 
     return (
