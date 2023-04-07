@@ -36,7 +36,7 @@ const UserInfo = () => {
     }
 
     return (
-        <Layout title='Souscription Navigo Annuel : Informations titulaire'>
+        <Layout title='Souscription Navigo Annuel : Informations titulaire' step={1}>
             <Card>
                 <CardHeader>
                     <Heading size='md'>Veuillez renseigner les coordonnées du titulaire du passe</Heading>
@@ -51,10 +51,11 @@ const UserInfo = () => {
                     <PhoneForm label='Telephone fixe' refInput={inputPhone} />
                     <EmailForm refInput={inputEmail} />
                     <Checkbox ref={inputOptin}>J’accepte de recevoir par e-mail et/ou SMS des offres et informations commerciales de la part des entreprises de transports en commun d’Île-de-France membres du GIE Comutitres, de leurs partenaires, et d’Île-de-France Mobilités.</Checkbox>
+                    <Button colorScheme='blue' onClick={handleClick}>Passer à l'étape suivante</Button>
                 </CardBody>
             </Card>
 
-            <Button colorScheme='blue' onClick={handleClick}>Passer à l'étape suivante</Button>
+
         </Layout>
     );
 };
