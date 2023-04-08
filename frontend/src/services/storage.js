@@ -3,7 +3,7 @@ const saveUser = (user) => {
 }
 
 const getUser = () => {
-    return JSON.parse(localStorage.getItem('user'))
+    return JSON.parse(localStorage.getItem('user') ?? '{}')
 }
 
 const removeUser = () => {

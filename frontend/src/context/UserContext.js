@@ -1,7 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import Axios from "@/services/axios";
 import React, { useContext, useState } from 'react';
-import { validateService } from '@/services/validate';
 import { storageService } from '@/services/storage';
 
 const UserContext = React.createContext(null)
@@ -60,66 +59,16 @@ export const UserProvider = ({ children }) => {
         storageService.saveUser(newUser)
     }
 
-    const updateUserInfos = (
-        civility,
-        name,
-        firstName,
-        birthday,
-        mobile,
-        phone,
-        email,
-        optin,
-        address,
-        address1,
-        zipcode,
-        city,
-        receivePlace
-    ) => {
-        if (validateService.isText(name)
-            && validateService.isText(firstName)
-            && validateService.isDate(birthday)
-            && validateService.isPhone(mobile)
-            && validateService.isPhone(phone)
-            && validateService.isEmail(email)
-            && validateService.isText(address)
-            && validateService.isZipcode(zipcode)
-            && validateService.isText(city)) {
-
-            const newUser = {
-                ...user,
-                civility,
-                name,
-                firstName,
-                birthday,
-                mobile,
-                phone,
-                email,
-                optin,
-                address,
-                address1,
-                zipcode,
-                city,
-                country: 'France',
-                receivePlace
-            }
-            setUser(newUser)
-            storageService.saveUser(newUser)
-
-            toast({
-                description: 'ok',
-                status: 'success',
-                isClosable: true,
-            })
-            return true
-
-        } else {
-            toast({
-                description: 'Le formulaire contient des erreurs!',
-                status: 'error',
-                isClosable: true,
-            })
-            return false
+    const updateUserInfos = () => {
+        const newUser = {
+            civility: 'M',
+            optin: false,
+            country: 'France',
+            receivePlace: 'home',
+            ...user
         }
+        setUser(newUser)
+        storageService.saveUser(newUser)
     }
 
     const handleChangeForm = (e) => {

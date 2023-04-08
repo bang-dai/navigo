@@ -1,10 +1,10 @@
 const isText = (text) => {
-    return text.length > 0
+    return !!text && text.length > 0
 }
 
 const isDate = (dateString) => {
     const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateString.match(dateFormat)) {
+    if (!!dateString && !dateString.match(dateFormat)) {
         return false;
     }
 
@@ -20,7 +20,7 @@ const isDate = (dateString) => {
 
 
 const isPhone = (phone, required = false) => {
-    if (!required && phone.length === 0) {
+    if (!required && (!phone || phone.length === 0)) {
         return true
     }
     const regex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/

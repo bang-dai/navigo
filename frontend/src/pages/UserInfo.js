@@ -1,5 +1,6 @@
-import { Button, Card, CardBody, CardHeader, Heading, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardHeader, Heading, Text, useToast } from "@chakra-ui/react";
 import { useUserProvider } from "@/context/UserContext";
+import { useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import EmailForm from "@/components/form/EmailForm";
 import InputForm from "@/components/form/InputForm";
@@ -8,36 +9,37 @@ import DateForm from "@/components/form/DateForm";
 import CivilityForm from "@/components/form/CivilityForm";
 import ZipcodeForm from "@/components/form/ZipcodeForm";
 import ReceivePassForm from "@/components/form/ReceivePassForm";
-import { useNavigate } from "react-router-dom";
-import CheckboxForm from "../components/form/CheckboxForm";
-
+import CheckboxForm from "@/components/form/CheckboxForm";
+import { validateService } from "@/services/validate";
 
 const UserInfo = () => {
+    const toast = useToast()
     const { updateUserInfos, user } = useUserProvider()
     const navigate = useNavigate()
 
-    const handleClick = () => {
-        /* const civility = inputMan.current.checked ? inputMan.current.value : inputWoman.current.value
-        const receivePlace = inputReceiveHome.current.checked ? inputReceiveHome.current.value : inputReceivePdv.current.value
+    const isValidForm = () => {
+        return (validateService.isText(user.name)
+            && validateService.isText(user.firstName)
+            && validateService.isDate(user.birthday)
+            && validateService.isPhone(user.mobile)
+            && validateService.isPhone(user.phone)
+            && validateService.isEmail(user.email)
+            && validateService.isText(user.address)
+            && validateService.isZipcode(user.zipcode)
+            && validateService.isText(user.city))
+    }
 
-        const success = updateUserInfos(
-            civility,
-            inputName.current.value,
-            inputFirstName.current.value,
-            inputBirthday.current.value,
-            inputMobile.current.value,
-            inputPhone.current.value,
-            inputEmail.current.value,
-            inputOptin.current.checked,
-            inputAddress.current.value,
-            inputAddress1.current.value,
-            inputZipcode.current.value,
-            inputCity.current.value,
-            receivePlace
-        )
-        if (success) {
+    const handleClick = () => {
+        if (isValidForm()) {
+            updateUserInfos()
             navigate("/photo")
-        } */
+        } else {
+            toast({
+                description: 'Le formulaire contient des erreurs!',
+                status: 'error',
+                isClosable: true,
+            })
+        }
     }
 
 
