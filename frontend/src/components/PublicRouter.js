@@ -1,9 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Error from '@/utils/Error';
-import { Home, Forfait } from '@/pages';
-import UserInfo from '../pages/UserInfo';
-import UserPicture from '../pages/UserPicture';
+import { Home, Forfait, UserInfo, UserPicture, Payment, Summary, Error } from '@/pages';
 
 const PublicRouter = () => {
     return (
@@ -13,6 +10,8 @@ const PublicRouter = () => {
                 <Route path="/forfait" element={<Forfait />} />
                 <Route path="/coordonnees" element={<UserInfo />} />
                 <Route path="/photo" element={<UserPicture />} />
+                <Route path="/paiement" element={<Payment />} />
+                <Route path="/recapitulatif" element={<Summary />} />
                 <Route path='*' element={<Error />} />
             </Route>
         </Routes>

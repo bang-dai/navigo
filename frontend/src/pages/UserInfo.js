@@ -44,7 +44,7 @@ const UserInfo = () => {
 
 
     return (
-        <Layout title='Souscription Navigo Annuel : Informations titulaire' step={1}>
+        <Layout title='Souscription Navigo Annuel : Informations titulaire' step='1'>
             <Card mb="2rem">
                 <CardHeader>
                     <Heading size='md'>Veuillez renseigner les coordonnées du titulaire du passe</Heading>

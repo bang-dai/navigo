@@ -9,7 +9,6 @@ const Layout = ({ children, title, step = 0 }) => {
 
     useEffect(() => {
         if (firstCall.current) {
-            console.log('call in layout useEffect')
             syncUser()
         }
         return () => {
