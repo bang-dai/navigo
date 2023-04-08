@@ -1,11 +1,14 @@
-import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { validateService } from '@/services/validate';
 import axios from 'axios';
+import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import React, { useRef, useState } from 'react';
+import { validateService } from '@/services/validate';
+import { useUserProvider } from '@/context/UserContext';
 
-const ZipcodeForm = ({ refZipcode, refCity }) => {
+
+const ZipcodeForm = () => {
+    const refCity = useRef()
     const [isError, setIsError] = useState(false)
-    const [city, setCity] = useState('')
+    const { handleChangeForm, user, setUser } = useUserProvider()
 
     const handleFocusOut = async (e) => {
         const value = e.target.value
@@ -13,7 +16,13 @@ const ZipcodeForm = ({ refZipcode, refCity }) => {
         setIsError(error)
         if (!error) {
             const data = await callCityApi(value)
-            setCity(data[0].libelleAcheminement || '')
+            //setCity(data[0].libelleAcheminement || '')
+            const city = data[0].libelleAcheminement || ''
+            refCity.current.value = city
+            setUser({
+                ...user,
+                city
+            })
         }
     }
 
@@ -35,14 +44,14 @@ const ZipcodeForm = ({ refZipcode, refCity }) => {
         <>
             <FormControl isInvalid={isError} isRequired mb="1rem">
                 <FormLabel>Code postal</FormLabel>
-                <Input type='text' onBlur={(e) => handleFocusOut(e)} ref={refZipcode} />
+                <Input type='text' onBlur={(e) => handleFocusOut(e)} value={user.zipcode ?? ''} name='zipcode' onChange={handleChangeForm} />
                 {isError && (
                     <FormErrorMessage>Information incorrecte, veuillez la saisir à nouveau.</FormErrorMessage>
                 )}
             </FormControl>
             <FormControl isRequired mb="1rem">
                 <FormLabel>Ville</FormLabel>
-                <Input type='text' ref={refCity} value={city} disabled />
+                <Input type='text' value={user.city ?? ''} name='city' ref={refCity} disabled />
             </FormControl>
             <FormControl isRequired mb="1rem">
                 <FormLabel>Pays</FormLabel>

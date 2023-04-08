@@ -1,13 +1,16 @@
 import { FormControl, FormLabel, RadioGroup, HStack, Radio } from '@chakra-ui/react';
+import { useUserProvider } from '@/context/UserContext';
 
-const CivilityForm = ({ label, refMan, refWoman }) => {
+const CivilityForm = ({ label }) => {
+    const { handleChangeForm } = useUserProvider()
+
     return (
         <FormControl as='fieldset' isRequired mb="1rem">
             <FormLabel>{label}</FormLabel>
             <RadioGroup defaultValue='M'>
                 <HStack spacing='24px'>
-                    <Radio ref={refMan} name="civility" value="M">Monsieur</Radio>
-                    <Radio ref={refWoman} name="civility" value="Mrs">Madame</Radio>
+                    <Radio name="civility" value="M" onChange={handleChangeForm}>Monsieur</Radio>
+                    <Radio name="civility" value="Mrs" onChange={handleChangeForm}>Madame</Radio>
                 </HStack>
             </RadioGroup>
         </FormControl>

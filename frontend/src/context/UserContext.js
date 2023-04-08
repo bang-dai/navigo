@@ -2,6 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import Axios from "@/services/axios";
 import React, { useContext, useState } from 'react';
 import { validateService } from '@/services/validate';
+import { storageService } from '@/services/storage';
 
 const UserContext = React.createContext(null)
 
@@ -36,28 +37,55 @@ export const UserProvider = ({ children }) => {
             })
         }
     }
+
+    const syncUser = () => {
+        const storageUser = storageService.getUser()
+        if (Object.keys(user).length === 0 && Object.keys(storageUser).length !== 0) {
+            setUser(storageUser)
+        }
+    }
+
     /**
      * Set Month number and Id forfait selected by user
      * @param {number} startFrom Month from 0 to 11
      * @param {number} idForfait Id of the forfait
      */
     const setForfait = (startFrom, idForfait) => {
-        setUser({
+        const newUser = {
             ...user,
             startFrom,
             idForfait
-        })
+        }
+        setUser(newUser)
+        storageService.saveUser(newUser)
     }
 
-    const updateUserInfos = (civility, name, firstName, birthday, mobile, phone, email, optin) => {
+    const updateUserInfos = (
+        civility,
+        name,
+        firstName,
+        birthday,
+        mobile,
+        phone,
+        email,
+        optin,
+        address,
+        address1,
+        zipcode,
+        city,
+        receivePlace
+    ) => {
         if (validateService.isText(name)
             && validateService.isText(firstName)
             && validateService.isDate(birthday)
             && validateService.isPhone(mobile)
             && validateService.isPhone(phone)
-            && validateService.isEmail(email)) {
+            && validateService.isEmail(email)
+            && validateService.isText(address)
+            && validateService.isZipcode(zipcode)
+            && validateService.isText(city)) {
 
-            setUser({
+            const newUser = {
                 ...user,
                 civility,
                 name,
@@ -66,14 +94,23 @@ export const UserProvider = ({ children }) => {
                 mobile,
                 phone,
                 email,
-                optin
-            })
+                optin,
+                address,
+                address1,
+                zipcode,
+                city,
+                country: 'France',
+                receivePlace
+            }
+            setUser(newUser)
+            storageService.saveUser(newUser)
 
             toast({
                 description: 'ok',
                 status: 'success',
                 isClosable: true,
             })
+            return true
 
         } else {
             toast({
@@ -81,11 +118,22 @@ export const UserProvider = ({ children }) => {
                 status: 'error',
                 isClosable: true,
             })
+            return false
         }
     }
 
+    const handleChangeForm = (e) => {
+        //console.log(e.target.name)
+        //console.log(e.target.type)
+        setUser({
+            ...user,
+            [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
+        })
+    }
+
+
     return (
-        <UserContext.Provider value={{ getForfaits, setForfait, updateUserInfos }}>
+        <UserContext.Provider value={{ user, setUser, getForfaits, setForfait, updateUserInfos, syncUser, handleChangeForm }}>
             {children}
         </UserContext.Provider>
     );

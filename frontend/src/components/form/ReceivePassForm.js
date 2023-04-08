@@ -1,14 +1,19 @@
 import { FormControl, RadioGroup, HStack, Radio, Text } from '@chakra-ui/react';
+import { useUserProvider } from '@/context/UserContext';
 
-const ReceivePassForm = ({ refHome, refPDV }) => {
+const ReceivePassForm = () => {
+    const { handleChangeForm } = useUserProvider()
+
     return (
         <>
             <FormControl as='fieldset' isRequired mb="1rem">
                 <RadioGroup defaultValue='home'>
                     <HStack spacing='24px'>
-                        <Radio ref={refHome} name="receivePass" value="home">Recevoir à l'adresse ci-dessus</Radio>
-                        <Radio ref={refPDV} name="receivePass" value="pdv">Réception sous 10 jours (hors week-end et jours fériés) après validation de votre dossier
-                            Retirer dans un point de vente</Radio>
+                        <Radio name="receivePlace" value="home" onChange={handleChangeForm}>Recevoir à l'adresse ci-dessus</Radio>
+                        <Radio name="receivePlace" value="pdv" onChange={handleChangeForm}>
+                            Réception sous 10 jours (hors week-end et jours fériés) après validation de votre dossier
+                            Retirer dans un point de vente
+                        </Radio>
                     </HStack>
                 </RadioGroup>
             </FormControl>

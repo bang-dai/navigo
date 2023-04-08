@@ -1,9 +1,11 @@
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { validateService } from '@/services/validate';
+import { useUserProvider } from '@/context/UserContext';
 
-const DateForm = ({ label, refInput }) => {
+const DateForm = ({ label, name }) => {
     const [isError, setIsError] = useState(false)
+    const { handleChangeForm, user } = useUserProvider()
 
     function handleFocusOut(e) {
         const value = e.target.value
@@ -13,7 +15,7 @@ const DateForm = ({ label, refInput }) => {
     return (
         <FormControl isInvalid={isError} isRequired mb="1rem">
             <FormLabel>{label}</FormLabel>
-            <Input type='date' onBlur={(e) => handleFocusOut(e)} ref={refInput} />
+            <Input type='date' onBlur={(e) => handleFocusOut(e)} value={user[name] ?? ''} name={name} onChange={handleChangeForm} />
             {isError && (
                 <FormErrorMessage>Information incorrecte, veuillez la saisir à nouveau.</FormErrorMessage>
             )}

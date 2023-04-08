@@ -38,6 +38,9 @@ Copy .env.dist to .env and modify the .env file like this example to adapt your 
 
 *Your application will be at http://127.0.0.1:8000*
 
+7. Exit PHP container and go to frontend dir
+8. Start front with : `yarn startco` (like yarn start, but using craco)
+
 
 ## Ready to use with
 
