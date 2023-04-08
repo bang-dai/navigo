@@ -71,6 +71,15 @@ export const UserProvider = ({ children }) => {
         storageService.saveUser(newUser)
     }
 
+    const updateUserPicture = (picture) => {
+        const newUser = {
+            ...user,
+            picture
+        }
+        setUser(newUser)
+        storageService.saveUser(newUser)
+    }
+
     const handleChangeForm = (e) => {
         //console.log(e.target.name)
         //console.log(e.target.type)
@@ -82,7 +91,7 @@ export const UserProvider = ({ children }) => {
 
 
     return (
-        <UserContext.Provider value={{ user, setUser, getForfaits, setForfait, updateUserInfos, syncUser, handleChangeForm }}>
+        <UserContext.Provider value={{ user, setUser, getForfaits, setForfait, updateUserInfos, syncUser, handleChangeForm, updateUserPicture }}>
             {children}
         </UserContext.Provider>
     );
