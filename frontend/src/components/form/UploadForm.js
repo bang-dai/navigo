@@ -15,7 +15,6 @@ const UploadForm = () => {
     useEffect(() => {
         if (user.picture) {
             setFile(imageService.ipfsToHTTPS(user.picture))
-            console.log('useEffect from uploadForm')
         }
     }, [user.picture])
 

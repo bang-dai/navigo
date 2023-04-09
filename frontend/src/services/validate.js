@@ -37,6 +37,16 @@ const isZipcode = (zipcode) => {
     return regex.test(zipcode)
 }
 
+const isBic = (bic) => {
+    const regex = /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/
+    return regex.test(bic)
+}
+
+const isIban = (iban) => {
+    const regex = /^(?=.{5,34}$)[A-Z]{2}\d{2}[A-Z]{4}(\d{1,3}){0,2}$/
+    return regex.test(iban)
+}
+
 export const validateService = {
-    isText, isDate, isPhone, isEmail, isZipcode
+    isText, isDate, isPhone, isEmail, isZipcode, isBic, isIban
 }
