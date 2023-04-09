@@ -80,9 +80,12 @@ export const UserProvider = ({ children }) => {
         storageService.saveUser(newUser)
     }
 
+    const updateUserPayment = () => {
+        //no need to update user here, because already updated
+        storageService.saveUser(user)
+    }
+
     const handleChangeForm = (e) => {
-        //console.log(e.target.name)
-        //console.log(e.target.type)
         setUser({
             ...user,
             [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
@@ -91,7 +94,17 @@ export const UserProvider = ({ children }) => {
 
 
     return (
-        <UserContext.Provider value={{ user, setUser, getForfaits, setForfait, updateUserInfos, syncUser, handleChangeForm, updateUserPicture }}>
+        <UserContext.Provider value={{
+            user,
+            setUser,
+            syncUser,
+            getForfaits,
+            setForfait,
+            handleChangeForm,
+            updateUserInfos,
+            updateUserPicture,
+            updateUserPayment
+        }}>
             {children}
         </UserContext.Provider>
     );

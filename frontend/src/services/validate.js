@@ -43,7 +43,7 @@ const isBic = (bic) => {
 }
 
 const isIban = (iban) => {
-    const regex = /^(?=.{5,34}$)[A-Z]{2}\d{2}[A-Z]{4}(\d{1,3}){0,2}$/
+    const regex = /^(?:((?:IT|SM)\d{2}[A-Z]{1}\d{22})|(NL\d{2}[A-Z]{4}\d{10})|(LV\d{2}[A-Z]{4}\d{13})|((?:BG|GB|IE)\d{2}[A-Z]{4}\d{14})|(GI\d{2}[A-Z]{4}\d{15})|(RO\d{2}[A-Z]{4}\d{16})|(MT\d{2}[A-Z]{4}\d{23})|(NO\d{13})|((?:DK|FI|FO)\d{16})|((?:SI)\d{17})|((?:AT|EE|LU|LT)\d{18})|((?:HR|LI|CH)\d{19})|((?:DE)\d{20})|((?:CZ|ES|SK|SE)\d{22})|(PT\d{23})|((?:IS)\d{24})|((?:BE)\d{14})|((?:FR|MC|GR)\d{25})|((?:PL|HU|CY)\d{26}))$/
     return regex.test(iban)
 }
 

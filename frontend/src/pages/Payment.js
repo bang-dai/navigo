@@ -1,12 +1,34 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Text, useToast } from "@chakra-ui/react";
 import Layout from "./Layout";
-import InputForm from "@/components/form/InputForm";
+import BicForm from "@/components/form/BicForm";
+import IbanForm from "../components/form/IbanForm";
+import { validateService } from "@/services/validate";
+import { useUserProvider } from "@/context/UserContext";
+import { useNavigate } from "react-router-dom";
 
-const handleClick = () => {
-
-}
 
 const Payment = () => {
+    const { user, updateUserPayment } = useUserProvider()
+    const navigate = useNavigate()
+    const toast = useToast()
+
+    const isValidForm = () => {
+        return (validateService.isBic(user.bic) && validateService.isIban(user.iban))
+    }
+
+    const handleClick = () => {
+        if (isValidForm()) {
+            updateUserPayment()
+            navigate('/recapitulatif')
+        } else {
+            toast({
+                description: 'Le formulaire contient des erreurs!',
+                status: 'error',
+                isClosable: true,
+            })
+        }
+    }
+
     return (
         <Layout title='Souscription Navigo Annuel : Mode de paiement' step='3'>
             <Card mb="2rem">
@@ -14,8 +36,8 @@ const Payment = () => {
                     <Heading size='md'>Payer en 11 fois par prélèvements</Heading>
                 </CardHeader>
                 <CardBody>
-                    <InputForm label='BIC' name='bic' />
-                    <InputForm label='IBAN' name='iban' />
+                    <BicForm />
+                    <IbanForm />
                 </CardBody>
                 <CardFooter>
                     <Text>Votre compte bancaire doit être domicilié en Europe dans l’espace SEPA. Les comptes épargnes ne sont pas autorisés.</Text>
