@@ -19,6 +19,13 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({})
     const toast = useToast()
 
+    const syncUser = () => {
+        const storageUser = storageService.getUser()
+        if (Object.keys(user).length === 0 && Object.keys(storageUser).length !== 0) {
+            setUser(storageUser)
+        }
+    }
+
     const getForfaits = async () => {
         try {
             const response = await Axios.get('/forfaits')
@@ -27,6 +34,7 @@ export const UserProvider = ({ children }) => {
                     `This is an HTTP error: The status is ${response.status}`
                 );
             }
+
             return response.data
         } catch (err) {
             toast({
@@ -34,13 +42,6 @@ export const UserProvider = ({ children }) => {
                 status: 'error',
                 isClosable: true,
             })
-        }
-    }
-
-    const syncUser = () => {
-        const storageUser = storageService.getUser()
-        if (Object.keys(user).length === 0 && Object.keys(storageUser).length !== 0) {
-            setUser(storageUser)
         }
     }
 

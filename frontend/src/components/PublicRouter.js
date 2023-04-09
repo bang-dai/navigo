@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, Forfait, UserInfo, UserPicture, Payment, Summary, Error } from '@/pages';
+import { Home, Forfait, UserInfo, UserPicture, Payment, Summary, Error, End } from '@/pages';
 
 const PublicRouter = () => {
     return (
@@ -12,6 +12,7 @@ const PublicRouter = () => {
                 <Route path="/photo" element={<UserPicture />} />
                 <Route path="/paiement" element={<Payment />} />
                 <Route path="/recapitulatif" element={<Summary />} />
+                <Route path="/end" element={<End />} />
                 <Route path='*' element={<Error />} />
             </Route>
         </Routes>
