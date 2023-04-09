@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PaymentRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +26,13 @@ class Payment
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $startFrom = null;
+
+    public function __construct(string $bic, string $iban, string $startFrom)
+    {
+        $this->bic = $bic;
+        $this->iban = $iban;
+        $this->startFrom = DateTime::createFromFormat('d/m/Y H:i:s', $startFrom . '00:00:00');
+    }
 
     public function getId(): ?int
     {

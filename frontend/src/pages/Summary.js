@@ -6,7 +6,7 @@ import { imageService } from "@/services/image";
 import { useEffect, useRef, useState } from "react";
 
 const Summary = () => {
-    const { user, getForfaits } = useUserProvider()
+    const { user, getForfaits, postUser } = useUserProvider()
     const [forfaits, setForfaits] = useState([])
     const [file, setFile] = useState("https://via.placeholder.com/200")
     const navigate = useNavigate()
@@ -33,8 +33,11 @@ const Summary = () => {
     }, [user.picture, getForfaits])
 
 
-    const handleClick = () => {
-        navigate('/end')
+    const handleClick = async () => {
+        const success = await postUser()
+        if (success) {
+            navigate('/end')
+        }
     }
     return (
         <Layout title='Souscription Navigo Annuel : Récapitulatif' step='4'>
@@ -150,7 +153,7 @@ const Summary = () => {
                 <CardBody>
                     <Text>Les informations recueillies sur ce formulaire par le GIE Comutitres font l’objet d’un traitement informatique dans le cadre de la délivrance et l’utilisation du passe Navigo tel que défini dans les CGVU du passe Navigo . Vous pouvez accéder aux données vous concernant, les rectifier, demander leur effacement, exercer votre droit à la limitation du traitement de vos données et introduire une réclamation auprès de la CNIL. Ces droits peuvent être exercés aux adresses mentionnées dans les CGVU.
                         Consultez notre politique de confidentialité sur les informations collectées.</Text>
-                    <Button colorScheme='blue' onClick={handleClick}>Je certifie que ces données sont exactes</Button>
+                    <Button colorScheme='blue' onClick={handleClick}>Je certifie que ces données sont exactes et je valide mon inscription.</Button>
                 </CardBody>
             </Card>
         </Layout>

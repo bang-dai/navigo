@@ -93,6 +93,25 @@ export const UserProvider = ({ children }) => {
         })
     }
 
+    const postUser = async () => {
+        try {
+            const response = await Axios.post('/subscription', user)
+            if (response.status !== 201) {
+                throw new Error(
+                    `This is an HTTP error: The status is ${response.status}`
+                );
+            }
+
+            return true
+        } catch (err) {
+            toast({
+                description: err.message,
+                status: 'error',
+                isClosable: true,
+            })
+        }
+    }
+
 
     return (
         <UserContext.Provider value={{
@@ -104,7 +123,8 @@ export const UserProvider = ({ children }) => {
             handleChangeForm,
             updateUserInfos,
             updateUserPicture,
-            updateUserPayment
+            updateUserPayment,
+            postUser
         }}>
             {children}
         </UserContext.Provider>
