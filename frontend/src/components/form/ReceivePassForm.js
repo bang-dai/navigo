@@ -2,12 +2,12 @@ import { FormControl, RadioGroup, HStack, Radio, Text } from '@chakra-ui/react';
 import { useUserProvider } from '@/context/UserContext';
 
 const ReceivePassForm = () => {
-    const { handleChangeForm } = useUserProvider()
+    const { handleChangeForm, user } = useUserProvider()
 
     return (
         <>
             <FormControl as='fieldset' isRequired mb="1rem">
-                <RadioGroup defaultValue='home'>
+                <RadioGroup defaultValue={user.receivePlace ?? 'home'}>
                     <HStack spacing='24px'>
                         <Radio name="receivePlace" value="home" onChange={handleChangeForm}>Recevoir à l'adresse ci-dessus</Radio>
                         <Radio name="receivePlace" value="pdv" onChange={handleChangeForm}>

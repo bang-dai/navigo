@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Forfait = () => {
-    const { getForfaits, setForfait } = useUserProvider()
+    const { getForfaits, setForfait, user } = useUserProvider()
     const [forfaits, setForfaits] = useState()
     const radioMonth = useRef(null)
     const radioNextMonth = useRef(null)
@@ -59,16 +59,16 @@ const Forfait = () => {
                         <>
                             <FormControl as='fieldset' mt='2rem' mb='2rem'>
                                 <FormLabel as='legend'>Date de début de votre forfait*</FormLabel>
-                                <RadioGroup defaultValue={startMonth.id}>
+                                <RadioGroup defaultValue={startMonth.startFrom}>
                                     <HStack spacing='24px'>
-                                        <Radio ref={radioMonth} name="radioMonth" value={startMonth.id}>{startMonth.label}</Radio>
-                                        <Radio ref={radioNextMonth} name="radioMonth" value={startNextMonth.id}>{startNextMonth.label}</Radio>
+                                        <Radio ref={radioMonth} name="radioMonth" value={startMonth.startFrom}>{startMonth.label}</Radio>
+                                        <Radio ref={radioNextMonth} name="radioMonth" value={startNextMonth.startFrom}>{startNextMonth.label}</Radio>
                                     </HStack>
                                 </RadioGroup>
                             </FormControl>
                             <FormControl mt='2rem' mb='2rem'>
                                 <FormLabel>Zonage et tarif TTC(1)*</FormLabel>
-                                <Select id="select-forfait" ref={inputForfait}>
+                                <Select id="select-forfait" ref={inputForfait} defaultValue={user.idForfait ?? 1} >
                                     {forfaits.map((forfait) =>
                                         <option key={forfait.id} value={forfait.id}>{getLabel(forfait)}</option>
                                     )}

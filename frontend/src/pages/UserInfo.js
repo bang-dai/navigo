@@ -59,7 +59,6 @@ const UserInfo = () => {
                     <PhoneForm label='Telephone fixe' name='phone' />
                     <EmailForm name='email' />
                     <CheckboxForm name='optin' label="J’accepte de recevoir par e-mail et/ou SMS des offres et informations commerciales de la part des entreprises de transports en commun d’Île-de-France membres du GIE Comutitres, de leurs partenaires, et d’Île-de-France Mobilités." />
-
                 </CardBody>
             </Card>
             <Card mb="2rem">
