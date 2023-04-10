@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\AttributeOverride;
 use Doctrine\ORM\Mapping\AttributeOverrides;
 use Doctrine\ORM\Mapping\Column;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[AttributeOverrides(
@@ -20,12 +21,14 @@ use Doctrine\ORM\Mapping\Column;
 class User extends Payer
 {
     #[ORM\Column]
+    #[Assert\NotNull()]
     protected ?bool $optin = null;
 
     #[ORM\Column]
     protected ?bool $receiveAtHome = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $picture = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

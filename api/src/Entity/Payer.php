@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PayerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PayerRepository::class)]
 class Payer
@@ -18,12 +19,15 @@ class Payer
     protected ?bool $isMan = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $firstname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank()]
     protected ?\DateTimeInterface $birthday = null;
 
     #[ORM\Column(length: 30, nullable: true)]
@@ -33,21 +37,26 @@ class Payer
     protected ?string $mobile = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     protected ?string $address1 = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank()]
     protected ?string $zipcode = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $country = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $email = null;
 
     public function getId(): ?int
