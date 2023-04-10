@@ -32,7 +32,7 @@ Copy .env.dist to .env and modify the .env file like this example to adapt your 
 1. Log into the PHP container `docker-compose exec php bash`
 2. Install dependencies : `cd api && composer install`
 3. Create database: `php bin/console d:d:c`
-4. Play migrations : `php bin/console make:migration` then `php bin/console d:m:m`
+4. Play migrations : `php bin/console d:m:m`
 5. Play fixtures : `php bin/console d:f:l --no-interaction`
 6. Start the server : `symfony serve -d`
 

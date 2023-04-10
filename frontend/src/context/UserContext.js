@@ -101,7 +101,9 @@ export const UserProvider = ({ children }) => {
                     `This is an HTTP error: The status is ${response.status}`
                 );
             }
-
+            //clear user after submit to api
+            storageService.removeUser()
+            setUser({})
             return true
         } catch (err) {
             toast({
